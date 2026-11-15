@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Privacy Policy — Smart Price Drop Tracker</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f6f7fb;
+      --surface: #ffffff;
+      --text: #171927;
+      --muted: #5b6075;
+      --border: #e3e6ef;
+      --accent: #6d5efc;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0d0f16;
+        --surface: #151824;
+        --text: #f2f3f8;
+        --muted: #a8aec4;
+        --border: #272c3d;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 48px 20px;
+      background: var(--bg);
+      color: var(--text);
+      font: 16px/1.7 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    }
+    main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 40px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      box-shadow: 0 18px 50px rgba(20, 24, 40, 0.08);
+    }
+    h1 { margin: 0 0 6px; font-size: 30px; line-height: 1.2; }
+    h2 { margin: 32px 0 10px; font-size: 19px; line-height: 1.3; }
+    p, li { color: var(--text); }
+    .meta { margin: 0 0 26px; color: var(--muted); font-size: 14px; }
+    .summary {
+      margin: 24px 0;
+      padding: 18px 20px;
+      border-left: 4px solid var(--accent);
+      border-radius: 10px;
+      background: color-mix(in srgb, var(--accent) 8%, var(--surface));
+    }
+    ul { padding-left: 22px; }
+    li { margin: 6px 0; }
+    a { color: var(--accent); }
+    footer { margin-top: 34px; padding-top: 18px; border-top: 1px solid var(--border); color: var(--muted); font-size: 13px; }
+    @media (max-width: 620px) {
+      body { padding: 20px 12px; }
+      main { padding: 24px 18px; border-radius: 14px; }
+      h1 { font-size: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Privacy Policy</h1>
+    <p class="meta">Smart Price Drop Tracker · Last updated: 15 November 2026</p>
+
+    <div class="summary">
+      <strong>Short version:</strong> Smart Price Drop Tracker is local-only. Your tracked products,
+      price history and settings stay in your browser on your device. There is no account, no developer
+      server, no analytics, no advertising and no sale of data.
+    </div>
+
+    <h2>1. Who this policy covers</h2>
+    <p>
+      This policy covers the <strong>Smart Price Drop Tracker</strong> browser extension
+      (the “extension”), developed by <strong>Raajan</strong> (the “developer”, “we”, “us”).
+      It explains what the extension stores, what network requests it makes, and how you can
+      delete your data.
+    </p>
+
+    <h2>2. Data stored on your device</h2>
+    <p>
+      The extension handles two categories of user data, only for the products you explicitly choose
+      to track:
+    </p>
+    <ul>
+      <li>
+        <strong>Website content:</strong> the product page HTML fetched for a price check, plus the
+        product title, image URL, price, MRP, availability and retailer name extracted from it.
+        The HTML is parsed locally and is not stored; only the extracted product fields are saved.
+      </li>
+      <li>
+        <strong>Web browsing activity:</strong> the product page URLs you add to your watchlist and
+        the timestamps of their price checks. The extension does not read or store your general
+        browsing history.
+      </li>
+    </ul>
+    <p>
+      The following information is stored in <code>chrome.storage.local</code> on the browser
+      profile where you installed the extension:
+    </p>
+    <ul>
+      <li>Product names, product page URLs, product image URLs and retailer names.</li>
+      <li>Current price, original/MRP, target price, availability and currency.</li>
+      <li>Price history, price-drop statistics and check timestamps.</li>
+      <li>Check status, confidence values and error information for the last check.</li>
+      <li>Your settings: theme, default check frequency, notification preferences and display options.</li>
+    </ul>
+    <p>
+      Legacy temporary-tab cleanup entries may be kept in <code>chrome.storage.session</code> until
+      the browser session ends. The current version does not open tabs for automatic checks.
+    </p>
+    <p>
+      This data is not synced to your Google account and is not sent to the developer or to any
+      third party.
+    </p>
+
+    <h2>3. Network requests</h2>
+    <p>The extension makes network requests only in these situations:</p>
+    <ul>
+      <li>
+        <strong>When you click the extension icon:</strong> the popup reads the current product page
+        inside your browser using the <code>activeTab</code> and <code>scripting</code> permissions.
+        The page content is processed locally. Nothing is uploaded to the developer.
+      </li>
+      <li>
+        <strong>When automatic price checks run:</strong> a hidden offscreen document fetches the
+        product page URL that you chose to track. This is a normal request to the retailer’s website,
+        so the retailer may receive your IP address, cookies for that site and standard request
+        headers, just as if you had visited the page. The fetched HTML is parsed locally and is not
+        stored or sent to the developer.
+      </li>
+      <li>
+        <strong>When product images are displayed:</strong> the dashboard and popup load image URLs
+        from the retailer’s image servers. The retailer may receive the request information normally
+        associated with loading an image.
+      </li>
+    </ul>
+    <p>
+      There are no requests to a developer-operated server, no analytics or telemetry, no advertising
+      SDKs, no third-party APIs and no remotely hosted code.
+    </p>
+
+    <h2>4. Permissions and why they are needed</h2>
+    <ul>
+      <li><strong>storage</strong> — save your products, price history, settings and cleanup state locally.</li>
+      <li><strong>alarms</strong> — schedule the 6, 12 or 24-hour price checks you choose, plus maintenance.</li>
+      <li><strong>notifications</strong> — show local price-drop and target-reached alerts.</li>
+      <li><strong>activeTab</strong> — read the current page only after you click the extension icon.</li>
+      <li><strong>scripting</strong> — run the bundled read-only extraction script in the current tab after you click the icon.</li>
+      <li><strong>offscreen</strong> — fetch and parse a monitored product page in a hidden document so scheduled checks do not open tabs.</li>
+      <li>
+        <strong>Optional host permissions</strong> — requested for one exact store origin only when you
+        enable automatic checks for a product. Nothing is granted at install time. You can remove
+        access later in the extension’s Settings page or in your browser’s extension settings.
+      </li>
+    </ul>
+
+    <h2>5. Sharing and sale of data</h2>
+    <p>
+      We do not sell, rent, trade or share your data. We do not receive your tracked products, price
+      history, browsing activity or page content. The extension has no account system and no backend.
+    </p>
+
+    <h2>6. Limited Use disclosure</h2>
+    <p>
+      The extension’s use of user data is limited to providing and improving its single purpose:
+      tracking the prices of products the user explicitly chooses and showing price history,
+      targets and alerts. User data is not used or transferred for personalised advertising,
+      profiling, resale or any unrelated purpose. The developer does not permit humans to read
+      user data except when required by law, when necessary for security, or when the user gives
+      specific consent for support. This disclosure is intended to meet the Chrome Web Store
+      User Data Policy and Limited Use requirements.
+    </p>
+
+    <h2>7. Data retention and deletion</h2>
+    <ul>
+      <li>Removing a product deletes that product’s record and price history from local storage.</li>
+      <li>Clearing the extension’s storage or uninstalling the extension deletes all extension data.</li>
+      <li>Exported JSON/CSV backup files are created only when you request them and are saved wherever your browser saves downloads. You control those files.</li>
+      <li>Retailer websites and browser caches may retain request logs under their own policies; the developer does not control those systems.</li>
+    </ul>
+
+    <h2>8. Security</h2>
+    <p>
+      Data is stored in your browser’s extension storage, which is protected by the browser’s own
+      security model. No method of storage is completely secure. Keep your browser and operating
+      system up to date, and protect access to your device and browser profile.
+    </p>
+
+    <h2>9. Children</h2>
+    <p>
+      The extension is a general-purpose shopping utility and is not directed to children under 13.
+      We do not knowingly collect personal information from children.
+    </p>
+
+    <h2>10. Changes to this policy</h2>
+    <p>
+      If this policy changes, the “Last updated” date will change and the new version will be
+      published at the same URL. Material changes will also be noted in the extension’s store
+      listing or release notes.
+    </p>
+
+    <h2>11. Contact</h2>
+    <p>
+      For privacy questions, use the support contact listed on the Smart Price Drop Tracker
+      Chrome Web Store listing. Please do not include sensitive personal information in support
+      messages.
+    </p>
+
+    <footer>
+      Smart Price Drop Tracker is an independent utility and is not affiliated with Amazon,
+      Flipkart, Myntra, AJIO, Croma, Reliance Digital, Tata CLiQ, Meesho or any other retailer.
+      Retailer names and trademarks belong to their respective owners.
+    </footer>
+  </main>
+</body>
+</html>
