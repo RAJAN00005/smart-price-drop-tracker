@@ -476,3 +476,5 @@ Smart Price Drop Tracker is an independent utility and is not affiliated with Am
 ---
 
 Developed by Raajan.
+#   s m a r t - p r i c e - d r o p - t r a c k e r  
+ 
