@@ -66,9 +66,9 @@ English
 
 ## Additional fields
 
-- **Official URL / homepage:** optional. Use your public project page if you have one.
-- **Support URL:** use a public page where users can report issues (for example a GitHub Issues page). Do not use a private email-only page if the store requires a URL.
-- **Privacy policy URL:** the public URL where `store/privacy-site/index.html` is hosted. See `store/PUBLISHING.md`.
+- **Official URL / homepage:** <https://github.com/RAJAN00005/smart-price-drop-tracker>
+- **Support URL:** <https://github.com/RAJAN00005/smart-price-drop-tracker/issues>
+- **Privacy policy URL:** <https://rajan00005.github.io/smart-price-drop-tracker/>
 
 ## Screenshots
 

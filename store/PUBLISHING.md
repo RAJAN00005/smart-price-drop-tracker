@@ -44,41 +44,20 @@ If you changed any extension file, reload the extension before testing.
 
 ## 2. Host the privacy policy
 
-The Chrome Web Store requires a public privacy policy URL. The prepared page is
-`store/privacy-site/index.html`. The free option is GitHub Pages.
+**Already done.** The policy is live at:
 
-### 2a. Create a public GitHub repository
+```
+https://rajan00005.github.io/smart-price-drop-tracker/
+```
 
-1. Sign in at <https://github.com>.
-2. Click **New repository**.
-3. Name it `smart-price-tracker-privacy` (or any name you like).
-4. Set it to **Public**.
-5. Do **not** add a README, `.gitignore` or licence if you want the simplest upload.
-6. Click **Create repository**.
+It is served from `docs/index.html` on the `main` branch via GitHub Pages
+(**Settings → Pages → Deploy from a branch → main / docs**). Use that exact URL in the
+Chrome Web Store **Privacy policy URL** field.
 
-### 2b. Upload the privacy page
+To update the text, edit `store/privacy-site/index.html`, copy it to `docs/index.html`, commit,
+and push. Pages redeploys automatically.
 
-1. In the new repository, click **Add file → Upload files**.
-2. Upload `store/privacy-site/index.html`.
-3. Commit the file to the `main` branch.
-
-### 2c. Turn on GitHub Pages
-
-1. Open the repository’s **Settings** tab.
-2. In the left sidebar, click **Pages**.
-3. Under **Build and deployment**, choose **Deploy from a branch**.
-4. Branch: **main**. Folder: **/(root)**. Click **Save**.
-5. Wait 1–2 minutes, then reload the page. GitHub shows the published URL, usually:
-
-   ```
-   https://YOUR-GITHUB-USERNAME.github.io/smart-price-tracker-privacy/
-   ```
-
-6. Open that URL in a private window and confirm the privacy policy loads over HTTPS.
-
-Use that exact URL in the Chrome Web Store **Privacy policy URL** field.
-
-> If you prefer not to use GitHub, any public HTTPS host works: Cloudflare Pages, Netlify,
+> If you prefer a different host, any public HTTPS host works: Cloudflare Pages, Netlify,
 > GitLab Pages, or your own website. The page has no external dependencies, so a single HTML file
 > is enough.
 

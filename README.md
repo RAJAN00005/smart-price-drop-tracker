@@ -96,16 +96,16 @@ The adapters use stable-looking selectors and structured data, but live pages ca
 
 ## Installation
 
-The extension is not yet published in the Chrome Web Store. Load it unpacked:
+The extension is not yet published in the Chrome Web Store, so it installs in Developer mode. This is free and takes about a minute.
 
-1. Download or clone this folder. The extension root is the `smart-price-tracker` folder (the one containing `manifest.json`).
+1. Download **[smart-price-drop-tracker-1.0.0.zip](https://github.com/RAJAN00005/smart-price-drop-tracker/releases/latest)** and extract it to a folder you keep.
 2. Open Chrome and go to `chrome://extensions`.
 3. Turn on **Developer mode** (top-right).
-4. Click **Load unpacked** and select the `smart-price-tracker` folder.
+4. Click **Load unpacked** and select the extracted folder (the one containing `manifest.json`).
 5. Pin **Smart Price Drop Tracker** from the extensions menu if you want quick access.
 6. Open a product page on a supported store, click the extension icon, and track the product.
 
-Microsoft Edge works the same way via `edge://extensions` → **Developer mode** → **Load unpacked**.
+Brave uses `brave://extensions` and Microsoft Edge uses `edge://extensions`; the steps are identical. You can also clone this repository and load the `smart-price-tracker` folder unpacked if you want to modify the source.
 
 **Requirements**
 
@@ -226,6 +226,8 @@ There are no content scripts, no `<all_urls>` install-time host access, no `webR
 - **No tracking.** There is no analytics, telemetry, advertising, account system or third-party service.
 - **Deletion.** Removing a product deletes its stored record and history. Removing the extension deletes all extension storage. Use the JSON export first if you want a backup.
 - **Backups.** Exported JSON/CSV files are written wherever your browser saves downloads. Treat them as personal data; they contain product names, URLs, prices and settings, but never site permissions.
+
+The full policy is published at **<https://rajan00005.github.io/smart-price-drop-tracker/>**.
 
 ---
 
@@ -456,13 +458,19 @@ This regenerates the PNG icons from `assets/icon.svg` using only Node's built-in
 
 ---
 
-## Publishing to the Chrome Web Store
+## Publishing
 
-The extension is not published yet. The `store/` folder contains everything needed for a Chrome Web Store release:
+**Released on GitHub:** [v1.0.0](https://github.com/RAJAN00005/smart-price-drop-tracker/releases/tag/v1.0.0) ships the installable ZIP. GitHub distribution is free, but installs are manual and there are no automatic updates; publish a new tag and ZIP for each version.
+
+**Privacy policy (live):** <https://rajan00005.github.io/smart-price-drop-tracker/> — served from `docs/` on the `main` branch via GitHub Pages.
+
+The extension is **not** in the Chrome Web Store yet. That store charges a one-time **$5** developer registration fee (per account, not per extension) and has no free tier. Brave has no separate extension store or fee; it installs from the Chrome Web Store. Microsoft Edge Add-ons is free and accepts the same ZIP.
+
+The `store/` folder contains everything needed for a store release:
 
 - `store/PUBLISHING.md` — step-by-step developer account, privacy policy hosting, ZIP build, listing, privacy disclosures and review instructions.
 - `store/LISTING.md` — ready-to-paste name, short description, detailed description and screenshot order.
-- `store/privacy-site/index.html` — standalone privacy policy page, ready to host on GitHub Pages or any HTTPS host.
+- `store/privacy-site/index.html` — source of the hosted privacy policy page.
 - `store/screenshots/` — five 1280 × 800 PNG screenshots.
 
 Before publishing, run `npm test` and `npm run test:e2e`, reload the unpacked extension, and verify that a scheduled check updates a price without opening a tab.
