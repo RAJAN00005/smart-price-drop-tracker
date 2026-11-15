@@ -1,0 +1,14 @@
+{
+  "name": "smart-price-drop-tracker",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Local-only Manifest V3 Chrome extension for tracking product prices in India.",
+  "scripts": {
+    "test": "node --test \"tests/unit/*.test.js\"",
+    "test:e2e": "node tests/e2e/run-e2e.mjs",
+    "icons": "node tools/generate-icons.mjs"
+  },
+  "devDependencies": {
+    "playwright-core": "^1.55.0"
+  }
+}

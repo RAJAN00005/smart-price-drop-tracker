@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="spt-icon-gradient" x1="12" y1="6" x2="118" y2="124" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6366F1"/>
+      <stop offset="1" stop-color="#A855F7"/>
+    </linearGradient>
+    <linearGradient id="spt-icon-sheen" x1="20" y1="10" x2="70" y2="90" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect x="3" y="3" width="122" height="122" rx="33" fill="url(#spt-icon-gradient)"/>
+  <rect x="3" y="3" width="122" height="122" rx="33" fill="url(#spt-icon-sheen)"/>
+  <path d="M27 49L54 69L69 57L96 84" fill="none" stroke="#FFFFFF" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M77 84H96V65" fill="none" stroke="#FFFFFF" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="27" cy="49" r="7" fill="#FFFFFF"/>
+</svg>

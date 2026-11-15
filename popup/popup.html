@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Smart Price Drop Tracker</title>
+  <link rel="stylesheet" href="popup.css">
+  <script src="../utils/theme-init.js"></script>
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 48 48" fill="none">
+          <rect x="1" y="1" width="46" height="46" rx="14" fill="url(#popupBrandGradient)"/>
+          <path d="M12 17.5L20.5 25L26 21L35 31.5" stroke="white" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M29.5 31.5H35V26" stroke="white" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="12" cy="17.5" r="2.4" fill="white"/>
+          <defs>
+            <linearGradient id="popupBrandGradient" x1="4" y1="2" x2="44" y2="47" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#6366F1"/>
+              <stop offset="1" stop-color="#A855F7"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </span>
+      <div class="brand-copy">
+        <h1>Smart Price Tracker</h1>
+        <p>Quietly watching prices for you</p>
+      </div>
+    </div>
+    <button id="open-dashboard-btn" class="icon-btn" type="button" title="Open dashboard" aria-label="Open dashboard">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <rect x="3" y="3" width="7" height="7" rx="2" stroke="currentColor" stroke-width="1.8"/>
+        <rect x="14" y="3" width="7" height="7" rx="2" stroke="currentColor" stroke-width="1.8"/>
+        <rect x="3" y="14" width="7" height="7" rx="2" stroke="currentColor" stroke-width="1.8"/>
+        <rect x="14" y="14" width="7" height="7" rx="2" stroke="currentColor" stroke-width="1.8"/>
+      </svg>
+    </button>
+  </header>
+
+  <main id="app-main">
+    <section id="loading-view" class="loading-view" aria-live="polite" aria-busy="true">
+      <div class="skeleton context-skeleton"></div>
+      <div class="skeleton-card">
+        <div class="skeleton thumb-skeleton"></div>
+        <div class="skeleton-lines">
+          <div class="skeleton line-lg"></div>
+          <div class="skeleton line-sm"></div>
+          <div class="skeleton line-price"></div>
+        </div>
+      </div>
+      <div class="skeleton field-skeleton"></div>
+      <p class="loading-caption">Reading this product page…</p>
+    </section>
+
+    <section id="detection-view" class="view" hidden>
+      <div class="context-row">
+        <span class="store-chip">
+          <span class="store-avatar" id="store-avatar">S</span>
+          <span id="store-name">Store</span>
+        </span>
+        <span id="confidence-chip" class="status-chip neutral">Detected</span>
+      </div>
+
+      <article class="product-card">
+        <div class="thumb">
+          <img id="product-image" alt="" referrerpolicy="no-referrer">
+          <div id="image-fallback" class="thumb-fallback" aria-hidden="true">S</div>
+        </div>
+        <div class="product-copy">
+          <h2 id="product-title" class="product-title">Product name</h2>
+          <p id="product-url" class="url-line"></p>
+          <div class="price-row">
+            <span id="current-price" class="current-price">₹0</span>
+            <span id="original-price" class="original-price" hidden></span>
+            <span id="discount-chip" class="discount-chip" hidden></span>
+          </div>
+          <button id="edit-price-btn" class="link-btn" type="button">Wrong price? Edit it</button>
+        </div>
+      </article>
+
+      <div id="confidence-note" class="inline-note warning" hidden>
+        <strong>Please confirm the price.</strong>
+        <span id="confidence-detail">More than one price was found on this page.</span>
+        <div id="candidate-list" class="candidate-list"></div>
+      </div>
+
+      <div id="price-edit-block" class="field" hidden>
+        <label for="price-input">Selling price</label>
+        <div class="input-wrap">
+          <span class="input-prefix" id="price-prefix">₹</span>
+          <input id="price-input" type="text" inputmode="decimal" autocomplete="off" placeholder="e.g. 4,499">
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="target-input">Target price <span class="label-optional">optional</span></label>
+        <div class="input-wrap">
+          <span class="input-prefix" id="target-prefix">₹</span>
+          <input id="target-input" type="text" inputmode="decimal" autocomplete="off" placeholder="e.g. 4,000">
+        </div>
+        <p class="field-hint">We’ll alert you when it reaches this price.</p>
+      </div>
+
+      <label class="switch-row" for="monitoring-toggle">
+        <span class="switch-copy">
+          <strong>Automatic price checks</strong>
+          <small>Requires one-time permission for this site</small>
+        </span>
+        <input id="monitoring-toggle" type="checkbox" checked>
+        <span class="switch-track" aria-hidden="true"></span>
+      </label>
+
+      <button id="track-btn" class="btn btn-primary btn-block" type="button">Track Price</button>
+      <p class="privacy-note">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 10V8a5 5 0 0 1 10 0v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><rect x="4" y="10" width="16" height="11" rx="3" stroke="currentColor" stroke-width="1.8"/></svg>
+        Prices stay on this device. No account, no cloud.
+      </p>
+    </section>
+
+    <section id="tracked-view" class="view" hidden>
+      <div class="context-row">
+        <span class="status-chip good">Already tracking</span>
+        <span id="tracked-status-chip" class="status-chip neutral">Active</span>
+      </div>
+
+      <article class="product-card">
+        <div class="thumb">
+          <img id="tracked-image" alt="" referrerpolicy="no-referrer">
+          <div id="tracked-image-fallback" class="thumb-fallback" aria-hidden="true">S</div>
+        </div>
+        <div class="product-copy">
+          <h2 id="tracked-title" class="product-title">Product name</h2>
+          <p id="tracked-store" class="url-line"></p>
+          <div class="price-row">
+            <span id="tracked-current" class="current-price">₹0</span>
+            <span id="tracked-original" class="original-price" hidden></span>
+          </div>
+        </div>
+      </article>
+
+      <div class="stats-grid">
+        <div class="mini-stat">
+          <span class="mini-label">Target</span>
+          <span id="tracked-target" class="mini-value">Not set</span>
+        </div>
+        <div class="mini-stat">
+          <span class="mini-label">Lowest seen</span>
+          <span id="tracked-lowest" class="mini-value">—</span>
+        </div>
+        <div class="mini-stat">
+          <span class="mini-label">Last checked</span>
+          <span id="tracked-last-check" class="mini-value">—</span>
+        </div>
+        <div class="mini-stat">
+          <span class="mini-label">Next check</span>
+          <span id="tracked-next-check" class="mini-value">—</span>
+        </div>
+      </div>
+
+      <div id="page-diff-note" class="inline-note success-note" hidden>
+        <span id="page-diff-text"></span>
+      </div>
+
+      <div id="tracked-update-block" class="field" hidden>
+        <label for="tracked-price-input">New price for this product</label>
+        <div class="input-wrap">
+          <span class="input-prefix" id="tracked-price-prefix">₹</span>
+          <input id="tracked-price-input" type="text" inputmode="decimal" autocomplete="off" placeholder="e.g. 4,499">
+        </div>
+        <div class="inline-actions">
+          <button id="save-price-btn" class="btn btn-primary btn-compact" type="button">Save price</button>
+          <button id="cancel-price-btn" class="btn btn-ghost btn-compact" type="button">Cancel</button>
+        </div>
+      </div>
+
+      <div class="action-stack">
+        <button id="view-details-btn" class="btn btn-primary btn-block" type="button">Open product details</button>
+        <button id="update-price-btn" class="btn btn-secondary btn-block" type="button">Update price</button>
+      </div>
+      <p id="tracked-hint" class="privacy-note">Automatic checks run while Chrome is open.</p>
+    </section>
+
+    <section id="unsupported-view" class="view" hidden>
+      <div class="empty-card">
+        <div class="empty-icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none">
+            <circle cx="24" cy="24" r="18" stroke="currentColor" stroke-width="2.4" stroke-dasharray="4 5"/>
+            <path d="M17 27l4.5-4.5 4 3.5L31 19" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M27 19h4v4" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h2 id="empty-title">No supported product detected.</h2>
+        <p id="empty-message">Try refreshing the page or open a supported product page.</p>
+        <div class="empty-actions">
+          <button id="retry-btn" class="btn btn-secondary btn-compact" type="button">Try again</button>
+          <button id="manual-toggle-btn" class="btn btn-ghost btn-compact" type="button">Add manually</button>
+        </div>
+      </div>
+
+      <form id="manual-form" class="manual-form" hidden>
+        <h3>Add this page manually</h3>
+        <p class="field-hint">Useful when a store changes its layout or blocks price detection.</p>
+        <div class="field">
+          <label for="manual-title">Product name</label>
+          <input id="manual-title" type="text" autocomplete="off" maxlength="300" placeholder="e.g. Samsung Galaxy Buds">
+        </div>
+        <div class="field">
+          <label for="manual-price">Current price</label>
+          <div class="input-wrap">
+            <span class="input-prefix" id="manual-price-prefix">₹</span>
+            <input id="manual-price" type="text" inputmode="decimal" autocomplete="off" placeholder="e.g. 4,499">
+          </div>
+        </div>
+        <div class="field">
+          <label for="manual-target">Target price <span class="label-optional">optional</span></label>
+          <div class="input-wrap">
+            <span class="input-prefix" id="manual-target-prefix">₹</span>
+            <input id="manual-target" type="text" inputmode="decimal" autocomplete="off" placeholder="e.g. 4,000">
+          </div>
+        </div>
+        <label class="switch-row" for="manual-monitoring">
+          <span class="switch-copy">
+            <strong>Automatic price checks</strong>
+            <small>Requires one-time permission for this site</small>
+          </span>
+          <input id="manual-monitoring" type="checkbox">
+          <span class="switch-track" aria-hidden="true"></span>
+        </label>
+        <button id="manual-submit-btn" class="btn btn-primary btn-block" type="submit">Track manually</button>
+        <p class="field-hint" id="manual-url-hint"></p>
+      </form>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <span class="footer-privacy">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3l7 3v5c0 4.4-2.9 8.4-7 10-4.1-1.6-7-5.6-7-10V6l7-3z" stroke="currentColor" stroke-width="1.7"/><path d="M9.5 12l1.8 1.8 3.4-3.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Private by design
+    </span>
+    <span class="footer-credit">Developed by Raajan</span>
+    <button id="footer-dashboard-btn" class="footer-link" type="button">Open dashboard</button>
+  </footer>
+
+  <div id="toast-region" class="toast-region" role="status" aria-live="polite"></div>
+
+  <script defer src="../utils/date-utils.js"></script>
+  <script defer src="../utils/price-parser.js"></script>
+  <script defer src="../utils/url-normalizer.js"></script>
+  <script defer src="../utils/validation.js"></script>
+  <script defer src="../utils/site-catalog.js"></script>
+  <script defer src="../storage/data-model.js"></script>
+  <script defer src="../storage/storage-manager.js"></script>
+  <script defer src="../extractors/extraction-client.js"></script>
+  <script defer src="popup.js"></script>
+</body>
+</html>
